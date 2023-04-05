@@ -1,7 +1,6 @@
  
 import math
-import heapq
-import time
+import heapq 
  
 from Search_2D import plotting
 
@@ -93,7 +92,8 @@ class BidirectionalAStar:
                     self.PARENT_back[s_n] = s_back
                     heapq.heappush(self.OPEN_back,
                                    (self.f_value_back(s_n), s_n))
-
+                    
+        
         return self.extract_path(s_meet), self.CLOSED_fore, self.CLOSED_back
 
     def get_neighbor(self, s):

@@ -1,7 +1,9 @@
 import math
 import time
+
 import matplotlib.pyplot as plt
 import streamlit as st
+import psutil
  
 import streamlit.components.v1 as components
 import mpld3
@@ -62,8 +64,12 @@ class DStar:
         # record end time
         end = time.time()
         successMessage = ' ⌛ Time of execution of D* algorithm: ' + str((end-start) * 10**3) + ' ms'
-        st.success(successMessage  )
-        print("⌛ Time of execution of Dynamic A* (D*) algorithm is :", (end-start) * 10**3, "ms")
+        st.sidebar.success(successMessage)
+        cpu = '💻 CPU usage: ' + str(psutil.cpu_percent(4))
+        st.sidebar.success(cpu)
+        ram = '💽 RAM Used (GB): ' + str(psutil.virtual_memory()[3]/1000000000)
+        st.sidebar.success(ram)
+
         fig_html = mpld3.fig_to_html(self.fig)
         components.html(fig_html, height=850)
 

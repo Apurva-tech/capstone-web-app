@@ -7,6 +7,8 @@ import streamlit as st
 import streamlit.components.v1 as components
 import mpld3
 
+import psutil
+
 from Search_2D import plotting 
 
 
@@ -67,7 +69,11 @@ class ADStar:
             plt.pause(0.5)
         end = time.time()
         successMessage = ' ⌛ Time of execution of Anytime D* algorithm: ' + str((end-start) * 10**2) + ' ms'
-        st.success(successMessage  )
+        st.sidebar.success(successMessage  )
+        cpu = '💻 CPU usage: ' + str(psutil.cpu_percent(4))
+        st.sidebar.success(cpu)
+        ram = '💽 RAM Used (GB): ' + str(psutil.virtual_memory()[3]/1000000000)
+        st.sidebar.success(ram)
         self.fig.canvas.mpl_connect('button_press_event', self.on_press)
         fig_html = mpld3.fig_to_html(self.fig)
         components.html(fig_html, height=850)
