@@ -66,8 +66,8 @@ class ADStar:
             self.visited = set()
             plt.pause(0.5)
         end = time.time()
-        successMessage = ' Time of execution of Anytime D* algorithm: ' + str((end-start) * 10**2) + ' ms'
-        st.success(successMessage , icon="⏲")
+        successMessage = ' ⌛ Time of execution of Anytime D* algorithm: ' + str((end-start) * 10**2) + ' ms'
+        st.success(successMessage  )
         self.fig.canvas.mpl_connect('button_press_event', self.on_press)
         fig_html = mpld3.fig_to_html(self.fig)
         components.html(fig_html, height=850)

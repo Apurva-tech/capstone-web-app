@@ -220,7 +220,7 @@ class BidirectionalAStar:
 #     plot.animation_bi_astar(path, visited_fore, visited_back, "Bidirectional-A*")  # animation
     
 #     print("The path length for Bidirectional A* algorithm is: ", len(path))
-#     print("The time of execution of Bidirectional A star algorithm is :", (end-start)* 1000, "milliseconds")
+#     print("The ⌛ Time of execution of Bidirectional A star algorithm is :", (end-start)* 1000, "milliseconds")
 
 
 # if __name__ == '__main__':

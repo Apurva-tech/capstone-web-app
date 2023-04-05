@@ -44,8 +44,8 @@ def main():
             plot =  Plotting(x_start, x_goal, env)
             path, visited_fore, visited_back = bastar.searching()
             end = time.time()
-            successMessage = ' Time of execution of Bidirectional A* algorithm: ' + str((end-start) * 10**3) + ' ms'
-            st.success(successMessage , icon="⏲")
+            successMessage = ' ⌛ Time of execution of Bidirectional A* algorithm: ' + str((end-start) * 10**3) + ' ms'
+            st.success(successMessage  )
             plot.animation_bi_astar(path, visited_fore, visited_back, "Bidirectional-A*")
 
         elif environments == 'env 2': 
@@ -54,8 +54,8 @@ def main():
             plot =  Plotting(x_start, x_goal, env1)
             path, visited_fore, visited_back = bastar.searching()
             end = time.time()
-            successMessage = ' Time of execution of Bidirectional A* algorithm: ' + str((end-start) * 10) + ' ms'
-            st.success(successMessage , icon="⏲")
+            successMessage = ' ⌛ Time of execution of Bidirectional A* algorithm: ' + str((end-start) * 10) + ' ms'
+            st.success(successMessage  )
             plot.animation_bi_astar(path, visited_fore, visited_back, "Bidirectional-A*")
     
     elif option == 'LPA* Algorithm': 
@@ -90,8 +90,8 @@ def main():
         plot = Plotting(s_start, s_goal, env)
         rtaa.searching()
         end = time.time()
-        successMessage = ' Time of execution of Real-time Adaptive A* (RTAA*) algorithm: ' + str((end-start) * 10**3) + ' ms'
-        st.success(successMessage , icon="⏲")
+        successMessage = ' ⌛ Time of execution of Real-time Adaptive A* (RTAA*) algorithm: ' + str((end-start) * 10**3) + ' ms'
+        st.success(successMessage  )
             
         plot.animation_lrta(rtaa.path, rtaa.visited, "Real-time Adaptive A* (RTAA*)")
 
@@ -103,8 +103,8 @@ def main():
         plot.animation_lrta(rtaa.path, rtaa.visited, "Real-time Adaptive A* (RTAA*)")
         end = time.time()
     
-        successMessage = ' Time of execution of Real-time Adaptive A* (RTAA*) algorithm: ' + str((end-start) * 10**3) + ' ms'
-        st.success(successMessage , icon="⏲")
+        successMessage = ' ⌛ Time of execution of Real-time Adaptive A* (RTAA*) algorithm: ' + str((end-start) * 10**3) + ' ms'
+        st.success(successMessage  )
             
 
     # elif algorithm3d == 'D* 3D': 

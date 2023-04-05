@@ -61,9 +61,9 @@ class DStar:
         # st.write(self.fig)
         # record end time
         end = time.time()
-        successMessage = ' Time of execution of D* algorithm: ' + str((end-start) * 10**3) + ' ms'
-        st.success(successMessage , icon="⏲")
-        print("Time of execution of Dynamic A* (D*) algorithm is :", (end-start) * 10**3, "ms")
+        successMessage = ' ⌛ Time of execution of D* algorithm: ' + str((end-start) * 10**3) + ' ms'
+        st.success(successMessage  )
+        print("⌛ Time of execution of Dynamic A* (D*) algorithm is :", (end-start) * 10**3, "ms")
         fig_html = mpld3.fig_to_html(self.fig)
         components.html(fig_html, height=850)
 
