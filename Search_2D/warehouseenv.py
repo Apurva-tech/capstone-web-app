@@ -29,33 +29,31 @@ class Env:
         for i in range(y):
             obs.add((x - 1, i))
 
-        for i in range(10, 15):
-            obs.add((i, 20))
-
-        for i in range(23, 35):
-            obs.add((i, 20))
-
-        for i in range(5, 15):
-            obs.add((i, 23))
-
-        for i in range(25, 35):
-            obs.add((i, 18))
-
-        for i in range(39, 42):
-            obs.add((i, 18))
-
-        for i in range(5, 31):
-            obs.add((i, 15))
-        for i in range(25):
-            obs.add((20, i))
-
         for i in range(10, 30):
+            obs.add((i, 25))
+        for i in range(10, 30):
+            obs.add((i, 20))
+
+        for i in range(0, 18):
+            obs.add((10, i))
+        for i in range(0, 18):
+            obs.add((15, i))
+        for i in range(0, 18):
+            obs.add((20, i))
+        for i in range(0, 18):
+            obs.add((25, i))
+        for i in range(0, 18):
+            obs.add((30, i))
+
+        for i in range(12, 30):
+            obs.add((32, i))
+        for i in range(12, 30):
             obs.add((35, i))
+        for i in range(12, 30):
+            obs.add((37, i))
 
-        for i in range(23, 30):
-            obs.add((16, i))
-
-        for i in range(16):
-            obs.add((40, i))
-
+        for i in range(35, 45):
+            obs.add((i, 10))
+        for i in range(35, 45):
+            obs.add((i, 5))
         return obs

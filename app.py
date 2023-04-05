@@ -2,7 +2,7 @@ import streamlit as st
 import time 
 import psutil
 
-from Search_2D import env, env1
+from Search_2D import env, env1, seafloorenv, warehouseenv
 from Search_2D.Anytime_D_Star import ADStar
 
 from Search_2D.Bidirectional_a_star import BidirectionalAStar
@@ -25,12 +25,28 @@ def main():
 
     environments = st.sidebar.selectbox(
     'Choose environment',
-    ('env 1', 'env 2', 'env 3'))
+    ('Mars Rover', 'Elevated rocky terrain', 'Seafloor Terrain', 'Industry Warehouse Terrain'))
 
-    if environments == 'env 1': 
+    if environments == 'Mars Rover': 
        currentEnv = env
-    elif environments == 'env 2': 
+       html = '<html><body><img style="margin-bottom: 10px;" src="https://www.vaisala.com/sites/default/files/styles/16_9_liftup_extra_large/public/images/LIFT-Mars_3D-illustration_1600x900.jpg" alt="Mars rover" width="300" height="150"></body></html>'
+       st.sidebar.markdown(html, unsafe_allow_html=True)
+
+    elif environments == 'Elevated rocky terrain': 
        currentEnv = env1
+       html = '<html><body><img style="margin-bottom: 10px;" src="https://developers.google.com/static/maps/documentation/gaming/images/elevation2.png" alt="Mars rover" width="300" height="150"></body></html>'
+       st.sidebar.markdown(html, unsafe_allow_html=True)
+
+    elif environments == 'Seafloor Terrain' :
+       currentEnv = seafloorenv
+       html = '<html><body><img style="margin-bottom: 10px;" src="https://cdna.artstation.com/p/assets/images/images/003/214/442/large/anil-isbilir-highresscreenshot00002-copy.jpg" alt="Mars rover" width="300" height="150"></body></html>'
+       st.sidebar.markdown(html, unsafe_allow_html=True)
+    
+    elif environments == 'Industry Warehouse Terrain': 
+       currentEnv = warehouseenv
+       html = '<html><body><img style="margin-bottom: 10px;" src="https://www.360connect.com/wp-content/uploads/2020/12/forklift-835340_1920.jpg" alt="Mars rover" width="300" height="150"></body></html>'
+       st.sidebar.markdown(html, unsafe_allow_html=True)
+    
     
     if option == 'D* Algorithm': 
         s_start = (5, 5)
