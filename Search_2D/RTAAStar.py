@@ -1,8 +1,7 @@
-
 import copy
 import math
 
-from Search_2D import queue, plotting
+from Search_2D import queue
 
 class RTAAStar:
     def __init__(self, s_start, s_goal, N, heuristic_type, env):
