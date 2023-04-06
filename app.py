@@ -2,7 +2,8 @@ import streamlit as st
 import time 
 import psutil
 
-from Search_2D import env, env1, seafloorenv, warehouseenv
+from Search_2D import env, env1, seafloorenv, warehouseenv, aircraftterrainenv, agricultureenv, disasterenv
+ 
 from Search_2D.Anytime_D_Star import ADStar
 
 from Search_2D.Bidirectional_a_star import BidirectionalAStar
@@ -22,88 +23,101 @@ def main():
     # ('D* 3D', 'LPA* 3D', 'ARA* 3D', 'RTAA* 3D'))
 
     currentEnv = env
+    s_start = (10, 5)
+    s_goal = (45, 5)
 
     environments = st.sidebar.selectbox(
     'Choose environment',
-    ('Mars Rover', 'Elevated rocky terrain', 'Seafloor Terrain', 'Industry Warehouse Terrain'))
+    ('Aircraft Stealth Mission Terrain', 'Agriculture Terrain', 'Mars Terrain', 'Elevated rocky terrain', 'Seafloor Terrain', 'Industry Warehouse Terrain', 'Earthquake Disaster Terrain'))
 
-    if environments == 'Mars Rover': 
-       currentEnv = env
-       html = '<html><body><img style="margin-bottom: 10px;" src="https://www.vaisala.com/sites/default/files/styles/16_9_liftup_extra_large/public/images/LIFT-Mars_3D-illustration_1600x900.jpg" alt="Mars rover" width="300" height="150"></body></html>'
-       st.sidebar.markdown(html, unsafe_allow_html=True)
+    if environments == 'Aircraft Stealth Mission Terrain': 
+      s_start = (10, 3)
+      s_goal = (35, 2)
+      currentEnv = aircraftterrainenv 
+      html = '<html><body><img style="margin-bottom: 10px;" src="https://raw.githubusercontent.com/Apurva-tech/files/master/aircraftTerrain.jpeg" alt="Aircraft" width="300" height="150"></body></html>'
+      st.sidebar.markdown(html, unsafe_allow_html=True)
+ 
+    elif environments == 'Agriculture Terrain': 
+      s_start = (2, 2)
+      s_goal = (48, 2)
+      currentEnv = agricultureenv
+      html = '<html><body><img style="margin-bottom: 10px;" src="https://media.istockphoto.com/id/454184549/photo/soybean-field.jpg?s=612x612&w=0&k=20&c=pRJJFvHnsjnEfkQRW5s-hKS-PGtYfdcrh7mWzQWdvM0=" alt="Agriculture" width="300" height="150"></body></html>'
+      st.sidebar.markdown(html, unsafe_allow_html=True)
+
+    elif environments == 'Mars Terrain': 
+      currentEnv = env
+      html = '<html><body><img style="margin-bottom: 10px;" src="https://www.vaisala.com/sites/default/files/styles/16_9_liftup_extra_large/public/images/LIFT-Mars_3D-illustration_1600x900.jpg" alt="Mars Terrain" width="300" height="150"></body></html>'
+      st.sidebar.markdown(html, unsafe_allow_html=True)
 
     elif environments == 'Elevated rocky terrain': 
-       currentEnv = env1
-       html = '<html><body><img style="margin-bottom: 10px;" src="https://developers.google.com/static/maps/documentation/gaming/images/elevation2.png" alt="Mars rover" width="300" height="150"></body></html>'
-       st.sidebar.markdown(html, unsafe_allow_html=True)
+      currentEnv = env1
+      html = '<html><body><img style="margin-bottom: 10px;" src="https://developers.google.com/static/maps/documentation/gaming/images/elevation2.png" alt="Elevated rocky terrain" width="300" height="150"></body></html>'
+      st.sidebar.markdown(html, unsafe_allow_html=True)
 
     elif environments == 'Seafloor Terrain' :
-       currentEnv = seafloorenv
-       html = '<html><body><img style="margin-bottom: 10px;" src="https://cdna.artstation.com/p/assets/images/images/003/214/442/large/anil-isbilir-highresscreenshot00002-copy.jpg" alt="Mars rover" width="300" height="150"></body></html>'
-       st.sidebar.markdown(html, unsafe_allow_html=True)
+      currentEnv = seafloorenv
+      html = '<html><body><img style="margin-bottom: 10px;" src="https://cdna.artstation.com/p/assets/images/images/003/214/442/large/anil-isbilir-highresscreenshot00002-copy.jpg" alt="Seafloor Terrain" width="300" height="150"></body></html>'
+      st.sidebar.markdown(html, unsafe_allow_html=True)
+
+    elif environments == 'Earthquake Disaster Terrain' :
+      s_start = (2, 2)
+      s_goal = (48, 2)
+      currentEnv = disasterenv
+      html = '<html><body><img style="margin-bottom: 10px;" src="https://1.bp.blogspot.com/-977hjZn3njU/WRBW1DBF_LI/AAAAAAAAMRM/EYnfV9xuT4knm2REBExZeANvu67cooB6wCLcB/s1600/The%2Bdramatic%2Bterrain%2B-%2Bthe%2Bjoin%2Bbetween%2Btwo%2Btectonic%2Bplates.jpg" alt="Earthquake Disaster Terrain" width="300" height="150"></body></html>'
+      st.sidebar.markdown(html, unsafe_allow_html=True)
     
     elif environments == 'Industry Warehouse Terrain': 
-       currentEnv = warehouseenv
-       html = '<html><body><img style="margin-bottom: 10px;" src="https://www.360connect.com/wp-content/uploads/2020/12/forklift-835340_1920.jpg" alt="Mars rover" width="300" height="150"></body></html>'
-       st.sidebar.markdown(html, unsafe_allow_html=True)
+      s_start = (5, 5)
+      s_goal = (45, 25)
+      currentEnv = warehouseenv
+      html = '<html><body><img style="margin-bottom: 10px;" src="https://www.360connect.com/wp-content/uploads/2020/12/forklift-835340_1920.jpg" alt="Industry Warehouse Terrain" width="300" height="150"></body></html>'
+      st.sidebar.markdown(html, unsafe_allow_html=True)
     
     
-    if option == 'D* Algorithm': 
-        s_start = (5, 5)
-        s_goal = (45, 25)
-        dstar = DStar(s_start, s_goal, currentEnv)
-        dstar.run(s_start, s_goal) 
+    if option == 'D* Algorithm':  
+      dstar = DStar(s_start, s_goal, currentEnv)
+      dstar.run(s_start, s_goal) 
 
-    elif option == 'Bi-directional Algorithm': 
-        x_start = (5, 5)
-        x_goal = (45, 5)
-
-        start = time.time()
-        bastar = BidirectionalAStar(x_start, x_goal, "euclidean", currentEnv)
-        plot =  Plotting(x_start, x_goal, currentEnv)
-        path, visited_fore, visited_back = bastar.searching()
-        end = time.time()
+    elif option == 'Bi-directional Algorithm':
+      start = time.time()
+      bastar = BidirectionalAStar(s_start, s_goal, "euclidean", currentEnv)
+      plot =  Plotting(s_start, s_goal, currentEnv)
+      path, visited_fore, visited_back = bastar.searching()
+      end = time.time()
 
 
-        successMessage = ' ⌛ Time of execution of Bidirectional A* algorithm: ' + str((end-start) * 10**3) + ' ms'
-        st.sidebar.success(successMessage)
-        
-        cpu = '💻 CPU usage: ' + str(psutil.cpu_percent(4))
-        st.sidebar.success(cpu)
-        ram = '💽 RAM Used (GB): ' + str(psutil.virtual_memory()[3]/1000000000)
-        st.sidebar.success(ram)
+      successMessage = ' ⌛ Time of execution of Bidirectional A* algorithm: ' + str((end-start) * 10**3) + ' ms'
+      st.sidebar.success(successMessage)
+      
+      cpu = '💻 CPU usage: ' + str(psutil.cpu_percent(4))
+      st.sidebar.success(cpu)
+      ram = '💽 RAM Used (GB): ' + str(psutil.virtual_memory()[3]/1000000000)
+      st.sidebar.success(ram)
 
-        plot.animation_bi_astar(path, visited_fore, visited_back, "Bidirectional-A*")
+      plot.animation_bi_astar(path, visited_fore, visited_back, "Bidirectional-A*")
 
-    elif option == 'LPA* Algorithm': 
-       x_start = (5, 5)
-       x_goal = (45, 25)
-       lpastar = LPAStar(x_start, x_goal, "Euclidean", currentEnv)
-       lpastar.run() 
+    elif option == 'LPA* Algorithm':  
+      lpastar = LPAStar(s_start, s_goal, "Euclidean", currentEnv)
+      lpastar.run() 
 
     elif option == 'Anytime D* Algorithm': 
-       x_start = (5, 5)
-       x_goal = (40, 25)
-       dstar = ADStar(x_start, x_goal, 2.5, "euclidean", currentEnv)
-       dstar.run() 
+      dstar = ADStar(s_start, s_goal, 2.5, "euclidean", currentEnv)
+      dstar.run() 
     
-    elif option == 'RTAA* Algorithm':
-       s_start = (10, 5)
-       s_goal = (45, 25)
+    elif option == 'RTAA* Algorithm': 
+      start = time.time()
+      rtaa = RTAAStar(s_start, s_goal, 240, "euclidean", currentEnv)
+      plot = Plotting(s_start, s_goal, currentEnv)
+      rtaa.searching()
+      end = time.time()
+      successMessage = ' ⌛ Time of execution of Real-time Adaptive A* (RTAA*) algorithm: ' + str((end-start) * 10**3) + ' ms'
+      st.sidebar.success(successMessage)
 
-       start = time.time()
-       rtaa = RTAAStar(s_start, s_goal, 240, "euclidean", currentEnv)
-       plot = Plotting(s_start, s_goal, currentEnv)
-       rtaa.searching()
-       end = time.time()
-       successMessage = ' ⌛ Time of execution of Real-time Adaptive A* (RTAA*) algorithm: ' + str((end-start) * 10**3) + ' ms'
-       st.sidebar.success(successMessage)
-
-       cpu = '💻 CPU usage: ' + str(psutil.cpu_percent(4))
-       st.sidebar.success(cpu)
-       ram = '💽 RAM Used (GB): ' + str(psutil.virtual_memory()[3]/1000000000)
-       st.sidebar.success(ram)
-       plot.animation_lrta(rtaa.path, rtaa.visited, "Real-time Adaptive A* (RTAA*)")
+      cpu = '💻 CPU usage: ' + str(psutil.cpu_percent(4))
+      st.sidebar.success(cpu)
+      ram = '💽 RAM Used (GB): ' + str(psutil.virtual_memory()[3]/1000000000)
+      st.sidebar.success(ram)
+      plot.animation_lrta(rtaa.path, rtaa.visited, "Real-time Adaptive A* (RTAA*)")
 
 
 
