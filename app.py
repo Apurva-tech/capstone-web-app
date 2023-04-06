@@ -2,7 +2,7 @@ import streamlit as st
 import time 
 import psutil
 
-from Search_2D import env, env1, seafloorenv, warehouseenv, aircraftterrainenv, agricultureenv, disasterenv
+from Search_2D import env, env1, seafloorenv, warehouseenv, aircraftterrainenv, agricultureenv, disasterenv, forestenv, pedestrainenv
  
 from Search_2D.Anytime_D_Star import ADStar
 
@@ -28,7 +28,8 @@ def main():
 
     environments = st.sidebar.selectbox(
     'Choose environment',
-    ('Aircraft Stealth Mission Terrain', 'Agriculture Terrain', 'Mars Terrain', 'Elevated rocky terrain', 'Seafloor Terrain', 'Industry Warehouse Terrain', 'Earthquake Disaster Terrain'))
+    ('Aircraft Stealth Mission Terrain', 'Agriculture Terrain', 'Mars Terrain', 'Elevated rocky terrain', 'Seafloor Terrain', 'Industry Warehouse Terrain', 'Earthquake Disaster Terrain', 'Forest Terrain'
+     , 'Pedestrain Terrain'))
 
     if environments == 'Aircraft Stealth Mission Terrain': 
       s_start = (10, 3)
@@ -45,6 +46,8 @@ def main():
       st.sidebar.markdown(html, unsafe_allow_html=True)
 
     elif environments == 'Mars Terrain': 
+      s_start = (1, 1)
+      s_goal = (42, 29)
       currentEnv = env
       html = '<html><body><img style="margin-bottom: 10px;" src="https://www.vaisala.com/sites/default/files/styles/16_9_liftup_extra_large/public/images/LIFT-Mars_3D-illustration_1600x900.jpg" alt="Mars Terrain" width="300" height="150"></body></html>'
       st.sidebar.markdown(html, unsafe_allow_html=True)
@@ -71,6 +74,18 @@ def main():
       s_goal = (45, 25)
       currentEnv = warehouseenv
       html = '<html><body><img style="margin-bottom: 10px;" src="https://www.360connect.com/wp-content/uploads/2020/12/forklift-835340_1920.jpg" alt="Industry Warehouse Terrain" width="300" height="150"></body></html>'
+      st.sidebar.markdown(html, unsafe_allow_html=True)
+
+    elif environments == 'Forest Terrain': 
+      s_start = (5, 25) 
+      currentEnv = forestenv
+      html = '<html><body><img style="margin-bottom: 10px;" src="https://img5.goodfon.com/wallpaper/nbig/0/cb/priroda-leto-vid-sverkhu-les-derevia-doroga.jpg" alt="Forest Terrain" width="300" height="150"></body></html>'
+      st.sidebar.markdown(html, unsafe_allow_html=True)
+
+    elif environments == 'Pedestrain Terrain': 
+      s_goal = (35, 37) 
+      currentEnv = pedestrainenv
+      html = '<html><body><img style="margin-bottom: 10px;" src="https://community.esri.com/legacyfs/online/121677_3.jpg" alt="Pedestrain Terrain" width="300" height="150"></body></html>'
       st.sidebar.markdown(html, unsafe_allow_html=True)
     
     
