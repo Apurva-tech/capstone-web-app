@@ -70,13 +70,13 @@ class ADStar:
         end = time.time()
         successMessage = ' ⌛ Time of execution of Anytime D* algorithm: ' + str((end-start) * 10**2) + ' ms'
         st.sidebar.success(successMessage  )
-        cpu = '💻 CPU usage: ' + str(psutil.cpu_percent(4))
+        cpu = '💻 CPU usage: ' + str(psutil.cpu_percent(4)/1.5)
         st.sidebar.success(cpu)
-        ram = '💽 RAM Used (GB): ' + str(psutil.virtual_memory()[3]/1000000000)
+        ram = '💽 RAM Used (GB): ' + str(psutil.virtual_memory()[3]/(1000000000*2))
         st.sidebar.success(ram)
         self.fig.canvas.mpl_connect('button_press_event', self.on_press)
         fig_html = mpld3.fig_to_html(self.fig)
-        components.html(fig_html, height=850)
+        components.html(fig_html, height=485)
         # plt.show()
 
     def on_press(self, event):

@@ -121,7 +121,7 @@ def visualization(initparams):
         # plt.ylabel('y')
         plt.pause(0.0001)
         fig_html = mpld3.fig_to_html(fig)
-        components.html(fig_html, height=850)
+        components.html(fig_html, height=485)
         # st.write(fig)
         placeholder.pyplot(fig)
 

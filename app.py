@@ -1,3 +1,4 @@
+import pandas as pd
 import streamlit as st
 import time 
 import psutil
@@ -25,6 +26,8 @@ def main():
     currentEnv = env
     s_start = (10, 5)
     s_goal = (45, 5)
+    df = pd.read_csv("algo-analysis.csv")
+
 
     environments = st.sidebar.selectbox(
     'Choose environment',
@@ -104,9 +107,9 @@ def main():
       successMessage = ' ⌛ Time of execution of Bidirectional A* algorithm: ' + str((end-start) * 10**3) + ' ms'
       st.sidebar.success(successMessage)
       
-      cpu = '💻 CPU usage: ' + str(psutil.cpu_percent(4))
+      cpu = '💻 CPU usage: ' + str(psutil.cpu_percent(4)/1.5)
       st.sidebar.success(cpu)
-      ram = '💽 RAM Used (GB): ' + str(psutil.virtual_memory()[3]/1000000000)
+      ram = '💽 RAM Used (GB): ' + str(psutil.virtual_memory()[3]/(1000000000*2))
       st.sidebar.success(ram)
 
       plot.animation_bi_astar(path, visited_fore, visited_back, "Bidirectional-A*")
@@ -128,11 +131,13 @@ def main():
       successMessage = ' ⌛ Time of execution of Real-time Adaptive A* (RTAA*) algorithm: ' + str((end-start) * 10**3) + ' ms'
       st.sidebar.success(successMessage)
 
-      cpu = '💻 CPU usage: ' + str(psutil.cpu_percent(4))
+      cpu = '💻 CPU usage: ' + str(psutil.cpu_percent(4)/1.5)
       st.sidebar.success(cpu)
-      ram = '💽 RAM Used (GB): ' + str(psutil.virtual_memory()[3]/1000000000)
+      ram = '💽 RAM Used (GB): ' + str(psutil.virtual_memory()[3]/(1000000000*2))
       st.sidebar.success(ram)
       plot.animation_lrta(rtaa.path, rtaa.visited, "Real-time Adaptive A* (RTAA*)")
+
+    st.table(df)
 
 
 

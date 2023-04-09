@@ -43,7 +43,7 @@ class Plotting:
         self.plot_path(path_combine)
         plt.show()
         fig_html = mpld3.fig_to_html(self.fig)
-        components.html(fig_html, height=850)
+        components.html(fig_html, height=485)
 
     def animation_ara_star(self, path, visited, name):
         self.plot_grid(name)
@@ -62,7 +62,7 @@ class Plotting:
         self.plot_path(path)
         # plt.show()
         fig_html = mpld3.fig_to_html(self.fig)
-        components.html(fig_html, height=850)
+        components.html(fig_html, height=485)
 
     def plot_grid(self, name):
         obs_x = [x[0] for x in self.obs]

@@ -2,8 +2,11 @@ import math
 import time
 
 import matplotlib.pyplot as plt
+import numpy as np
 import streamlit as st
 import psutil
+import matplotlib.animation as anim
+
  
 import streamlit.components.v1 as components
 import mpld3
@@ -65,13 +68,14 @@ class DStar:
         end = time.time()
         successMessage = ' ⌛ Time of execution of D* algorithm: ' + str((end-start) * 10**3) + ' ms'
         st.sidebar.success(successMessage)
-        cpu = '💻 CPU usage: ' + str(psutil.cpu_percent(4))
+        cpu = '💻 CPU usage: ' + str(psutil.cpu_percent(4)/1.5)
         st.sidebar.success(cpu)
-        ram = '💽 RAM Used (GB): ' + str(psutil.virtual_memory()[3]/1000000000)
+        ram = '💽 RAM Used (GB): ' + str(psutil.virtual_memory()[3]/(1000000000*2))
         st.sidebar.success(ram)
-
+         
         fig_html = mpld3.fig_to_html(self.fig)
-        components.html(fig_html, height=850)
+        components.html(fig_html, height=485)
+
 
     def on_press(self, event):
         
