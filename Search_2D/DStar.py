@@ -46,7 +46,7 @@ class DStar:
 
         self.h[self.s_goal] = 0.0
 
-    def run(self, s_start, s_end):
+    def run(self, s_start, s_end, obs):
         # record start time
         start = time.time()
         self.init()
@@ -61,6 +61,7 @@ class DStar:
         self.Plot.plot_grid("Dynamic A* (D*)")
         self.plot_path(self.path)
         self.fig.canvas.mpl_connect('button_press_event', self.on_press)
+        self.on_press(obs)
         # plt.show()
         # st.pyplot(self.fig)
         # st.write(self.fig)
@@ -77,9 +78,9 @@ class DStar:
         components.html(fig_html, height=485)
 
 
-    def on_press(self, event):
+    def on_press(self, obs):
         
-        x, y = event.xdata, event.ydata
+        x, y = obs[0], obs[1]
         if x < 0 or x > self.x - 1 or y < 0 or y > self.y - 1:
             print("Please choose right area!")
         else:
