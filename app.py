@@ -1,9 +1,13 @@
 import pandas as pd
 import streamlit as st
-import time
-import psutil
+import time 
+import matplotlib.pyplot as plt
+
+
+import psutil  
 
 from Search_2D import env, env1, seafloorenv, warehouseenv, aircraftterrainenv, agricultureenv, disasterenv, forestenv, pedestrainenv
+import streamlit.components.v1 as components
 
 from Search_2D.Anytime_D_Star import ADStar
 
@@ -14,91 +18,268 @@ from Search_2D.RTAAStar import RTAAStar
 from Search_2D.plotting import Plotting
 from Search_3D.Dstar3D import D_star
 from Meta_Heuristic_Algorithm.main import geneticAlgorithm
+import altair as alt
+
 
 
 def main():
-    option = st.sidebar.selectbox(
-        'Choose 2D algorithm',
-        ('D* Algorithm', 'Bi-directional Algorithm',  'LPA* Algorithm', 'Anytime D* Algorithm', 'RTAA* Algorithm', 'Genetic Algorithm'))
- 
+    html_string = "<html><head><title>Yearly Symbol Prices</title></head><frameset><frame src='https://main--astonishing-flan-855511.netlify.app/?embedded=true'></frameset></html>"
+
     currentEnv = env
     s_start = (10, 5)
     s_goal = (45, 5)
     df = pd.read_csv("algo-analysis.csv")
 
-    environments = st.sidebar.selectbox(
-        'Choose environment',
-        ('Aircraft Stealth Mission Terrain', 'Agriculture Terrain', 'Mars Terrain', 'Elevated rocky terrain', 'Seafloor Terrain', 'Industry Warehouse Terrain', 'Earthquake Disaster Terrain', 'Forest Terrain', 'Pedestrain Terrain'))
+    toggle_button = st.sidebar.checkbox('Show only Analysis')
+    if(toggle_button):  
+        analysis = st.sidebar.selectbox(
+        'Choose Parameter to compare',
+        ('Time of execution', 'CPU Usage', 'RAM Usage', 'Open and Closed list', 'Optimality'))
 
-    if environments == 'Aircraft Stealth Mission Terrain':
-        s_start = (10, 3)
-        s_goal = (35, 2)
-        currentEnv = aircraftterrainenv
-        html = '<html><body><img style="margin-bottom: 10px;" src="https://raw.githubusercontent.com/Apurva-tech/files/master/aircraftTerrain.jpeg" alt="Aircraft" width="300" height="150"></body></html>'
-        st.sidebar.markdown(html, unsafe_allow_html=True)
+        if (analysis == 'Time of execution'):
+            x = ['D* Algorithm', 'Bi-directional Algorithm', 'LPA* Algorithm', 'Anytime D* Algorithm', 'RTAA* Algorithm']
+            y = [20, 35, 50, 300, 70]
 
-    elif environments == 'Agriculture Terrain':
-        s_start = (2, 2)
-        s_goal = (48, 2)
-        currentEnv = agricultureenv
-        html = '<html><body><img style="margin-bottom: 10px;" src="https://media.istockphoto.com/id/454184549/photo/soybean-field.jpg?s=612x612&w=0&k=20&c=pRJJFvHnsjnEfkQRW5s-hKS-PGtYfdcrh7mWzQWdvM0=" alt="Agriculture" width="300" height="150"></body></html>'
-        st.sidebar.markdown(html, unsafe_allow_html=True)
+            data = pd.DataFrame({'Algorithm': x, 'Time of execution': y})
 
-    elif environments == 'Mars Terrain':
-        s_start = (1, 1)
-        s_goal = (42, 29)
-        currentEnv = env
-        html = '<html><body><img style="margin-bottom: 10px;" src="https://www.vaisala.com/sites/default/files/styles/16_9_liftup_extra_large/public/images/LIFT-Mars_3D-illustration_1600x900.jpg" alt="Mars Terrain" width="300" height="150"></body></html>'
-        st.sidebar.markdown(html, unsafe_allow_html=True)
+            color_scale = alt.Scale(domain=x, range=['#FFCC33', '#66CCCC', '#FF9999', '#99CC99', '#FF6666'])
 
-    elif environments == 'Elevated rocky terrain':
-        currentEnv = env1
-        html = '<html><body><img style="margin-bottom: 10px;" src="https://developers.google.com/static/maps/documentation/gaming/images/elevation2.png" alt="Elevated rocky terrain" width="300" height="150"></body></html>'
-        st.sidebar.markdown(html, unsafe_allow_html=True)
+            chart = alt.Chart(data).mark_bar().encode(
+                x=alt.X('Algorithm', sort='-y'),
+                y=alt.Y('Time of execution', axis=alt.Axis(title='Time of execution')),
+                color=alt.Color('Algorithm', scale=color_scale),
+                tooltip=[alt.Tooltip('Algorithm'), alt.Tooltip('Time of execution', format=',d')]
+            ).properties(
+                title={
+                    "text": " Time of executions v/s Algorithms",
+                    "subtitle": "in ms",
+                    "subtitleFontStyle": "italic",
+                    "fontSize": 20,
+                    "color": "gray"
+                },
+                width=600,
+                height=400
+            ).configure_axis(
+                labelFontSize=14,
+                titleFontSize=16,
+                titleFontWeight='bold'
+            ).configure_title(
+                subtitleFontSize=16,
+                subtitlePadding=10,
+                subtitleColor='gray'
+            )
 
-    elif environments == 'Seafloor Terrain':
-        currentEnv = seafloorenv
-        html = '<html><body><img style="margin-bottom: 10px;" src="https://cdna.artstation.com/p/assets/images/images/003/214/442/large/anil-isbilir-highresscreenshot00002-copy.jpg" alt="Seafloor Terrain" width="300" height="150"></body></html>'
-        st.sidebar.markdown(html, unsafe_allow_html=True)
+            st.altair_chart(chart, use_container_width=True)
 
-    elif environments == 'Earthquake Disaster Terrain':
-        s_start = (2, 2)
-        s_goal = (48, 2)
-        currentEnv = disasterenv
-        html = '<html><body><img style="margin-bottom: 10px;" src="https://1.bp.blogspot.com/-977hjZn3njU/WRBW1DBF_LI/AAAAAAAAMRM/EYnfV9xuT4knm2REBExZeANvu67cooB6wCLcB/s1600/The%2Bdramatic%2Bterrain%2B-%2Bthe%2Bjoin%2Bbetween%2Btwo%2Btectonic%2Bplates.jpg" alt="Earthquake Disaster Terrain" width="300" height="150"></body></html>'
-        st.sidebar.markdown(html, unsafe_allow_html=True)
+        if (analysis == 'CPU Usage'): 
+            x = ['D* Algorithm', 'Bi-directional Algorithm', 'LPA* Algorithm', 'Anytime D* Algorithm', 'RTAA* Algorithm']
+            y = [5.0, 4.6, 6.1, 3.8, 5.7]
 
-    elif environments == 'Industry Warehouse Terrain':
-        s_start = (5, 5)
-        s_goal = (45, 25)
-        currentEnv = warehouseenv
-        html = '<html><body><img style="margin-bottom: 10px;" src="https://www.360connect.com/wp-content/uploads/2020/12/forklift-835340_1920.jpg" alt="Industry Warehouse Terrain" width="300" height="150"></body></html>'
-        st.sidebar.markdown(html, unsafe_allow_html=True)
+            data = pd.DataFrame({'Algorithm': x, 'CPU Usage': y})
 
-    elif environments == 'Forest Terrain':
-        s_start = (5, 25)
-        currentEnv = forestenv
-        html = '<html><body><img style="margin-bottom: 10px;" src="https://img5.goodfon.com/wallpaper/nbig/0/cb/priroda-leto-vid-sverkhu-les-derevia-doroga.jpg" alt="Forest Terrain" width="300" height="150"></body></html>'
-        st.sidebar.markdown(html, unsafe_allow_html=True)
+            color_scale = alt.Scale(domain=x, range=['#FCB711', '#F37021', '#CC004C', '#6460AA', '#008AB8'])
 
-    elif environments == 'Pedestrain Terrain':
-        s_goal = (35, 37)
-        currentEnv = pedestrainenv
-        html = '<html><body><img style="margin-bottom: 10px;" src="https://community.esri.com/legacyfs/online/121677_3.jpg" alt="Pedestrain Terrain" width="300" height="150"></body></html>'
-        st.sidebar.markdown(html, unsafe_allow_html=True)
+            chart = alt.Chart(data).mark_bar().encode(
+                x=alt.X('CPU Usage', axis=alt.Axis(format='%', title='CPU Usage')),
+                y=alt.Y('Algorithm', sort='-x'),
+                color=alt.Color('Algorithm', scale=color_scale),
+                tooltip=[alt.Tooltip('Algorithm'), alt.Tooltip('CPU Usage', format='.2%')]
+            ).properties(
+                title={
+                    "text": "CPU Usage v/s Algorithm",
+                    "subtitle": "Percentage of CPU usage during execution",
+                    "subtitleFontStyle": "italic",
+                    "fontSize": 20,
+                    "color": "gray"
+                },
+                width=600,
+                height=400
+            ).configure_axis(
+                labelFontSize=14,
+                titleFontSize=16,
+                titleFontWeight='bold'
+            ).configure_title(
+                subtitleFontSize=16,
+                subtitlePadding=10,
+                subtitleColor='gray'
+            )
+
+            st.altair_chart(chart, use_container_width=True)
+
+        if(analysis == 'RAM Usage'): 
+            x = ['D* Algorithm', 'Bi-directional Algorithm', 'LPA* Algorithm', 'Anytime D* Algorithm', 'RTAA* Algorithm']
+            y = [4.6, 4.5, 2.89, 3.1, 2.9]
+
+            data = pd.DataFrame({'Algorithm': x, 'RAM Usage': y})
+
+            color_scale = alt.Scale(domain=x, range=['#6b5b95', '#feb236', '#d64161', '#ff7b25', '#e5c5dd'])
+
+            chart = alt.Chart(data).mark_bar().encode(
+                x=alt.X('RAM Usage', axis=alt.Axis(title='RAM Usage (GB)')),
+                y=alt.Y('Algorithm', sort='-x'),
+                color=alt.Color('Algorithm', scale=color_scale),
+                tooltip=[alt.Tooltip('Algorithm'), alt.Tooltip('RAM Usage', format='.2f', title='RAM Usage (GB)')]
+            ).properties(
+                title={
+                    "text": "RAM Usage by Algorithm",
+                    "subtitle": "Memory consumption during execution",
+                    "subtitleFontStyle": "italic",
+                    "fontSize": 20,
+                    "color": "gray"
+                },
+                width=600,
+                height=400
+            ).configure_axis(
+                labelFontSize=14,
+                titleFontSize=16,
+                titleFontWeight='bold'
+            ).configure_title(
+                subtitleFontSize=16,
+                subtitlePadding=10,
+                subtitleColor='gray'
+            )
+
+            st.altair_chart(chart, use_container_width=True)
+
+        if(analysis == 'Open and Closed list'): 
+            # Data
+            x = ['D* Algorithm', 'Bi-directional Algorithm', 'LPA* Algorithm', 'Anytime D* Algorithm', 'RTAA* Algorithm']
+            open_list_length = [587, 408, 467, 427, 487]
+            closed_list_length = [3041, 2406, 2789, 2549, 2971]
+
+            # Custom color palette
+            color_palette = ['#5B8FF9', '#61DDAA', '#65789B', '#F6BD16', '#7262fd', '#78D3F8', '#9661BC', '#F6903D', '#008080']
+
+            # Plot
+            fig, ax = plt.subplots(figsize=(15, 8))
+            ax.bar(x, open_list_length, color=color_palette[0], label='Open List Length')
+            ax.bar(x, closed_list_length, bottom=open_list_length, color=color_palette[1], label='Closed List Length')
+            ax.set_ylabel('Number of Nodes', fontsize=14, labelpad=12)
+            ax.set_xlabel('Algorithm', fontsize=14, labelpad=12)
+            ax.set_title('Search Space Explored by Algorithm', fontsize=18, pad=20, fontweight='bold')
+            ax.legend(fontsize=12)
+
+            # Styling
+            ax.spines['top'].set_visible(False)
+            ax.spines['right'].set_visible(False)
+            ax.tick_params(axis='both', which='major', labelsize=12, length=0)
+            ax.grid(axis='y', linestyle='--', alpha=0.7, zorder=0)
+
+            # Streamlit
+            st.pyplot(fig)
+        
+        if(analysis == 'Optimality'):
+            # Define the data
+            data = pd.DataFrame({
+                'Algorithm': ['D* Algorithm', 'Bi-directional Algorithm', 'LPA* Algorithm', 'Anytime D* Algorithm', 'RTAA* Algorithm'],
+                'Path Length': [100, 95, 90, 95, 92]
+            })
+
+            # Define the chart
+            chart = alt.Chart(data).mark_bar().encode(
+                x=alt.X('Path Length', title='Path Length'),
+                y=alt.Y('Algorithm', sort='-x', title='Algorithm'),
+                color=alt.Color('Algorithm', scale=alt.Scale(scheme='dark2'), legend=None)
+            ).properties(
+                width=600,
+                height=400,
+                title='Optimality of Pathfinding Algorithms'
+            )
+
+            # Display the chart in Streamlit
+            st.altair_chart(chart, use_container_width=True)
+        return
+    option = st.sidebar.selectbox(
+        'Choose 2D algorithm',
+        ('D* Algorithm', 'Bi-directional Algorithm',  'LPA* Algorithm', 'Anytime D* Algorithm', 'RTAA* Algorithm', 'Genetic Algorithm'))
+
+    if option != 'Genetic Algorithm': 
+        environments = st.sidebar.selectbox(
+            'Choose environment',
+            ('Aircraft Stealth Mission Terrain', 'Agriculture Terrain', 'Mars Terrain', 'Elevated rocky terrain', 'Seafloor Terrain', 'Industry Warehouse Terrain', 'Earthquake Disaster Terrain', 'Forest Terrain', 'Pedestrain Terrain'))
+
+        if environments == 'Aircraft Stealth Mission Terrain':
+            s_start = (10, 3)
+            s_goal = (35, 2)
+            currentEnv = aircraftterrainenv
+            html = '<html><body><img style="margin-bottom: 10px;" src="https://raw.githubusercontent.com/Apurva-tech/files/master/aircraftTerrain.jpeg" alt="Aircraft" width="300" height="150"></body></html>'
+            st.sidebar.metric(label="Best algorithm", value="RTAA* Algorithm", delta="optimal, time efficient")
+            st.sidebar.markdown(html, unsafe_allow_html=True)
+
+
+        elif environments == 'Agriculture Terrain':
+            s_start = (2, 2)
+            s_goal = (48, 2)
+            currentEnv = agricultureenv
+            html = '<html><body><img style="margin-bottom: 10px;" src="https://media.istockphoto.com/id/454184549/photo/soybean-field.jpg?s=612x612&w=0&k=20&c=pRJJFvHnsjnEfkQRW5s-hKS-PGtYfdcrh7mWzQWdvM0=" alt="Agriculture" width="300" height="150"></body></html>'
+            st.sidebar.metric(label="Best algorithm", value="LPA* Algorithm", delta="optimality, slowly changing environment")
+            st.sidebar.markdown(html, unsafe_allow_html=True)
+
+        elif environments == 'Mars Terrain':
+            s_start = (1, 1)
+            s_goal = (42, 29)
+            currentEnv = env
+            html = '<html><body><img style="margin-bottom: 10px;" src="https://www.vaisala.com/sites/default/files/styles/16_9_liftup_extra_large/public/images/LIFT-Mars_3D-illustration_1600x900.jpg" alt="Mars Terrain" width="300" height="150"></body></html>'
+            st.sidebar.metric(label="Best algorithm", value="D* or RTAA* Algorithm", delta="fuel efficient: optimum time and space complexity")
+            st.sidebar.markdown(html, unsafe_allow_html=True)
+
+        elif environments == 'Elevated rocky terrain':
+            currentEnv = env1
+            html = '<html><body><img style="margin-bottom: 10px;" src="https://developers.google.com/static/maps/documentation/gaming/images/elevation2.png" alt="Elevated rocky terrain" width="300" height="150"></body></html>'
+            st.sidebar.metric(label="Best algorithm", value="ARA* Algorithm", delta="dynamic env")
+            st.sidebar.markdown(html, unsafe_allow_html=True)
+
+        elif environments == 'Seafloor Terrain':
+            currentEnv = seafloorenv
+            html = '<html><body><img style="margin-bottom: 10px;" src="https://cdna.artstation.com/p/assets/images/images/003/214/442/large/anil-isbilir-highresscreenshot00002-copy.jpg" alt="Seafloor Terrain" width="300" height="150"></body></html>'
+            st.sidebar.metric(label="Best algorithm", value="D* Algorithm", delta="optimal, complex environments")
+            st.sidebar.markdown(html, unsafe_allow_html=True)
+
+        elif environments == 'Earthquake Disaster Terrain':
+            s_start = (2, 2)
+            s_goal = (48, 2)
+            currentEnv = disasterenv
+            html = '<html><body><img style="margin-bottom: 10px;" src="https://1.bp.blogspot.com/-977hjZn3njU/WRBW1DBF_LI/AAAAAAAAMRM/EYnfV9xuT4knm2REBExZeANvu67cooB6wCLcB/s1600/The%2Bdramatic%2Bterrain%2B-%2Bthe%2Bjoin%2Bbetween%2Btwo%2Btectonic%2Bplates.jpg" alt="Earthquake Disaster Terrain" width="300" height="150"></body></html>'
+            st.sidebar.metric(label="Best algorithm", value="ARA* Algorithm", delta="time, memory efficient")
+            st.sidebar.markdown(html, unsafe_allow_html=True)
+
+        elif environments == 'Industry Warehouse Terrain':
+            s_start = (5, 5)
+            s_goal = (45, 25)
+            currentEnv = warehouseenv
+            html = '<html><body><img style="margin-bottom: 10px;" src="https://www.360connect.com/wp-content/uploads/2020/12/forklift-835340_1920.jpg" alt="Industry Warehouse Terrain" width="300" height="150"></body></html>'
+            st.sidebar.metric(label="Best algorithm", value="LPA* Algorithm", delta="slow changing env, optimal")
+            st.sidebar.markdown(html, unsafe_allow_html=True)
+
+        elif environments == 'Forest Terrain':
+            s_start = (5, 25)
+            currentEnv = forestenv
+            html = '<html><body><img style="margin-bottom: 10px;" src="https://img5.goodfon.com/wallpaper/nbig/0/cb/priroda-leto-vid-sverkhu-les-derevia-doroga.jpg" alt="Forest Terrain" width="300" height="150"></body></html>'
+            st.sidebar.metric(label="Best algorithm", value="LPA* Algorithm", delta="optimal, less time complexity")
+            st.sidebar.markdown(html, unsafe_allow_html=True)
+
+        elif environments == 'Pedestrain Terrain':
+            s_start = (2, 2)
+            s_goal = (43, 37)
+            currentEnv = pedestrainenv
+            html = '<html><body><img style="margin-bottom: 10px;" src="https://community.esri.com/legacyfs/online/121677_3.jpg" alt="Pedestrain Terrain" width="300" height="150"></body></html>'
+            st.sidebar.metric(label="Best algorithm", value="Bidirectional A* Algorithm", delta="time, accurate")
+            st.sidebar.markdown(html, unsafe_allow_html=True)
+
+    # if option == 'Genetic Algorithm':
+    #     geneticAlgorithm()
+    elif( option == 'Genetic Algorithm'):
+        geneticAlgorithm()
+        if(st.button('Run simulation')): 
+            components.html(html_string, height=800) 
 
     obs = []
     if (option == 'D* Algorithm'):
         obs_x = st.sidebar.slider('Choose an obstacle (X)', 0, 51, 0)
         obs_y = st.sidebar.slider('Choose an obstacle (Y)', 0, 31, 0)
-        st.write("X ", obs_x, ' Y', obs_y)
+        st.write("Added obstacles at: ", "(X ", obs_x, ', Y', obs_y, ')')
 
         obs = [obs_x, obs_y]
-
-    if option == 'Genetic Algorithm':
-        geneticAlgorithm()
-
-    elif option == 'D* Algorithm':
         dstar = DStar(s_start, s_goal, currentEnv)
         dstar.run(s_start, s_goal, obs)
 
@@ -150,6 +331,7 @@ def main():
 
     if option != 'Genetic Algorithm':
       st.table(df)
+    
 
 
 if __name__ == '__main__':
