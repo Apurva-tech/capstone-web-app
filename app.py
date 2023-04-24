@@ -395,6 +395,9 @@ def main():
         
 
     elif option == 'RTAA* Algorithm':
+        if environments == 'Elevated rocky terrain':
+            st.video('gif/rtaa_star/elevatedRocky.mkv', format="video/mkv", start_time=0)
+            return
         start = time.time()
         rtaa = RTAAStar(s_start, s_goal, 240, "euclidean", currentEnv)
         plot = Plotting(s_start, s_goal, currentEnv)
@@ -411,6 +414,28 @@ def main():
         st.sidebar.success(ram)
         plot.animation_lrta(rtaa.path, rtaa.visited,
                             "Real-time Adaptive A* (RTAA*)")
+         
+        show_anim = st.checkbox('Run Animation')
+        if(show_anim): 
+            if(environments == 'Aircraft Stealth Mission Terrain'):
+                st.video('gif/rtaa_star/aircraft.mkv', format="video/mkv", start_time=0)
+            elif environments == 'Agriculture Terrain':
+                st.video('gif/rtaa_star/agriculture.mkv', format="video/mkv", start_time=0)
+            elif environments == 'Extra Terrestrial Terrain':
+                st.video('gif/rtaa_star/extraTerres.mkv', format="video/mkv", start_time=0)
+            elif environments == 'Elevated rocky terrain':
+                st.video('gif/rtaa_star/elevatedRocky.mkv', format="video/mkv", start_time=0)
+            elif environments == 'Seafloor Terrain':
+                st.video('gif/rtaa_star/seafloor.mkv', format="video/mkv", start_time=0)
+            elif environments == 'Earthquake Disaster Terrain':
+                st.video('gif/rtaa_star/earthquake.mkv', format="video/mkv", start_time=0)
+            elif environments == 'Industry Warehouse Terrain':
+                st.video('gif/rtaa_star/industry.mkv', format="video/mkv", start_time=0)
+            elif environments == 'Forest Terrain':
+                st.video('gif/rtaa_star/forest.mkv', format="video/mkv", start_time=0)
+            elif(environments == 'Pedestrain Terrain'):
+                st.video('gif/rtaa_star/pedestrian.mkv', format="video/mkv", start_time=0)
+        
 
     if option != 'Genetic Algorithm':
       st.table(df)
