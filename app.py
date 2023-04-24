@@ -194,7 +194,7 @@ def main():
     if option != 'Genetic Algorithm': 
         environments = st.sidebar.selectbox(
             'Choose environment',
-            ('Aircraft Stealth Mission Terrain', 'Agriculture Terrain', 'Extra Terrestrial Terrain', 'Elevated rocky terrain', 'Seafloor Terrain', 'Industry Warehouse Terrain', 'Earthquake Disaster Terrain', 'Forest Terrain', 'Pedestrain Terrain'))
+            ('Aircraft Stealth Mission Terrain', 'Agriculture Terrain', 'Extra Terrestrial Terrain', 'Elevated rocky terrain', 'Seafloor Terrain', 'Industry Warehouse Terrain', 'Earthquake Disaster Terrain', 'Forest Terrain', 'City street Terrain'))
 
         if environments == 'Aircraft Stealth Mission Terrain':
             s_start = (10, 3)
@@ -256,11 +256,11 @@ def main():
             st.sidebar.metric(label="Best algorithm", value="LPA* Algorithm", delta="optimal, less time complexity")
             st.sidebar.markdown(html, unsafe_allow_html=True)
 
-        elif environments == 'Pedestrain Terrain':
+        elif environments == 'City street Terrain':
             s_start = (2, 2)
             s_goal = (43, 37)
             currentEnv = pedestrainenv
-            html = '<html><body><img style="margin-bottom: 10px;" src="https://community.esri.com/legacyfs/online/121677_3.jpg" alt="Pedestrain Terrain" width="300" height="150"></body></html>'
+            html = '<html><body><img style="margin-bottom: 10px;" src="https://community.esri.com/legacyfs/online/121677_3.jpg" alt="City street Terrain" width="300" height="150"></body></html>'
             st.sidebar.metric(label="Best algorithm", value="Bidirectional A* Algorithm", delta="time, accurate")
             st.sidebar.markdown(html, unsafe_allow_html=True)
 
@@ -298,7 +298,7 @@ def main():
                 st.image('gif/d_star/industry.gif')
             elif environments == 'Forest Terrain':
                 st.image('gif/d_star/forest.gif')
-            elif(environments == 'Pedestrain Terrain'):
+            elif(environments == 'City street Terrain'):
                 st.image('gif/d_star/pedestrian.gif')
         
 
@@ -340,7 +340,7 @@ def main():
                 st.video('gif/bi_astar/industry.mkv', format="video/mkv", start_time=0)
             elif environments == 'Forest Terrain':
                 st.video('gif/bi_astar/forest.mkv', format="video/mkv", start_time=0)
-            elif(environments == 'Pedestrain Terrain'):
+            elif(environments == 'City street Terrain'):
                 st.video('gif/bi_astar/pedestrian.mp4', format="video/mp4", start_time=0)
         
     
@@ -365,7 +365,7 @@ def main():
                 st.video('gif/lpa_star/industry.mkv', format="video/mkv", start_time=0)
             elif environments == 'Forest Terrain':
                 st.video('gif/lpa_star/forest.mkv', format="video/mkv", start_time=0)
-            elif(environments == 'Pedestrain Terrain'):
+            elif(environments == 'City street Terrain'):
                 st.video('gif/lpa_star/pedestrian.mkv', format="video/mkv", start_time=0)
         
 
@@ -390,7 +390,7 @@ def main():
                 st.video('gif/anytime_dstar/industry.mkv', format="video/mkv", start_time=0)
             elif environments == 'Forest Terrain':
                 st.video('gif/anytime_dstar/forest.mkv', format="video/mkv", start_time=0)
-            elif(environments == 'Pedestrain Terrain'):
+            elif(environments == 'City street Terrain'):
                 st.video('gif/anytime_dstar/pedestrian.mkv', format="video/mkv", start_time=0)
         
 
@@ -433,7 +433,7 @@ def main():
                 st.video('gif/rtaa_star/industry.mkv', format="video/mkv", start_time=0)
             elif environments == 'Forest Terrain':
                 st.video('gif/rtaa_star/forest.mkv', format="video/mkv", start_time=0)
-            elif(environments == 'Pedestrain Terrain'):
+            elif(environments == 'City street Terrain'):
                 st.video('gif/rtaa_star/pedestrian.mkv', format="video/mkv", start_time=0)
         
 
