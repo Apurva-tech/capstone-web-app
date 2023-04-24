@@ -1,5 +1,6 @@
 import pandas as pd
 import streamlit as st
+import streamlit.components.v1 as components
 import time 
 import matplotlib.pyplot as plt
 
@@ -7,7 +8,6 @@ import matplotlib.pyplot as plt
 import psutil  
 
 from Search_2D import env, env1, seafloorenv, warehouseenv, aircraftterrainenv, agricultureenv, disasterenv, forestenv, pedestrainenv
-import streamlit.components.v1 as components
 
 from Search_2D.Anytime_D_Star import ADStar
 
@@ -15,11 +15,9 @@ from Search_2D.Bidirectional_a_star import BidirectionalAStar
 from Search_2D.DStar import DStar
 from Search_2D.LPAStar import LPAStar
 from Search_2D.RTAAStar import RTAAStar
-from Search_2D.plotting import Plotting
-from Search_3D.Dstar3D import D_star
+from Search_2D.plotting import Plotting 
 from Meta_Heuristic_Algorithm.main import geneticAlgorithm
 import altair as alt
-
 
 
 def main():
@@ -58,7 +56,7 @@ def main():
                     "color": "gray"
                 },
                 width=600,
-                height=400
+                height=600
             ).configure_axis(
                 labelFontSize=14,
                 titleFontSize=16,
@@ -93,7 +91,7 @@ def main():
                     "color": "gray"
                 },
                 width=600,
-                height=400
+                height=600
             ).configure_axis(
                 labelFontSize=14,
                 titleFontSize=16,
@@ -128,7 +126,7 @@ def main():
                     "color": "gray"
                 },
                 width=600,
-                height=400
+                height=600
             ).configure_axis(
                 labelFontSize=14,
                 titleFontSize=16,
@@ -151,7 +149,7 @@ def main():
             color_palette = ['#5B8FF9', '#61DDAA', '#65789B', '#F6BD16', '#7262fd', '#78D3F8', '#9661BC', '#F6903D', '#008080']
 
             # Plot
-            fig, ax = plt.subplots(figsize=(15, 8))
+            fig, ax = plt.subplots(figsize=(15, 13))
             ax.bar(x, open_list_length, color=color_palette[0], label='Open List Length')
             ax.bar(x, closed_list_length, bottom=open_list_length, color=color_palette[1], label='Closed List Length')
             ax.set_ylabel('Number of Nodes', fontsize=14, labelpad=12)
@@ -181,8 +179,8 @@ def main():
                 y=alt.Y('Algorithm', sort='-x', title='Algorithm'),
                 color=alt.Color('Algorithm', scale=alt.Scale(scheme='dark2'), legend=None)
             ).properties(
-                width=600,
-                height=400,
+                width=800,
+                height=600,
                 title='Optimality of Pathfinding Algorithms'
             )
 
@@ -196,7 +194,7 @@ def main():
     if option != 'Genetic Algorithm': 
         environments = st.sidebar.selectbox(
             'Choose environment',
-            ('Aircraft Stealth Mission Terrain', 'Agriculture Terrain', 'Mars Terrain', 'Elevated rocky terrain', 'Seafloor Terrain', 'Industry Warehouse Terrain', 'Earthquake Disaster Terrain', 'Forest Terrain', 'Pedestrain Terrain'))
+            ('Aircraft Stealth Mission Terrain', 'Agriculture Terrain', 'Extra Terrestrial Terrain', 'Elevated rocky terrain', 'Seafloor Terrain', 'Industry Warehouse Terrain', 'Earthquake Disaster Terrain', 'Forest Terrain', 'Pedestrain Terrain'))
 
         if environments == 'Aircraft Stealth Mission Terrain':
             s_start = (10, 3)
@@ -215,11 +213,11 @@ def main():
             st.sidebar.metric(label="Best algorithm", value="LPA* Algorithm", delta="optimality, slowly changing environment")
             st.sidebar.markdown(html, unsafe_allow_html=True)
 
-        elif environments == 'Mars Terrain':
+        elif environments == 'Extra Terrestrial Terrain':
             s_start = (1, 1)
             s_goal = (42, 29)
             currentEnv = env
-            html = '<html><body><img style="margin-bottom: 10px;" src="https://www.vaisala.com/sites/default/files/styles/16_9_liftup_extra_large/public/images/LIFT-Mars_3D-illustration_1600x900.jpg" alt="Mars Terrain" width="300" height="150"></body></html>'
+            html = '<html><body><img style="margin-bottom: 10px;" src="https://www.vaisala.com/sites/default/files/styles/16_9_liftup_extra_large/public/images/LIFT-Mars_3D-illustration_1600x900.jpg" alt="Extra Terrestrial Terrain" width="300" height="150"></body></html>'
             st.sidebar.metric(label="Best algorithm", value="D* or RTAA* Algorithm", delta="fuel efficient: optimum time and space complexity")
             st.sidebar.markdown(html, unsafe_allow_html=True)
 
@@ -282,6 +280,27 @@ def main():
         obs = [obs_x, obs_y]
         dstar = DStar(s_start, s_goal, currentEnv)
         dstar.run(s_start, s_goal, obs)
+        show_anim = st.checkbox('Run Animation')
+        if(show_anim): 
+            if(environments == 'Aircraft Stealth Mission Terrain'):
+                st.image('gif/d_star/aircraft.gif')
+            elif environments == 'Agriculture Terrain':
+                st.image('gif/d_star/agriculture.gif')
+            elif environments == 'Extra Terrestrial Terrain':
+                st.image('gif/d_star/extraTerres.gif')
+            elif environments == 'Elevated rocky terrain':
+                st.image('gif/d_star/elevatedRocky.gif')
+            elif environments == 'Seafloor Terrain':
+                st.image('gif/d_star/seafloor.gif')
+            elif environments == 'Earthquake Disaster Terrain':
+                st.image('gif/d_star/earthquake.gif')
+            elif environments == 'Industry Warehouse Terrain':
+                st.image('gif/d_star/industry.gif')
+            elif environments == 'Forest Terrain':
+                st.image('gif/d_star/forest.gif')
+            elif(environments == 'Pedestrain Terrain'):
+                st.image('gif/d_star/pedestrian.gif')
+        
 
     elif option == 'Bi-directional Algorithm':
         start = time.time()
@@ -302,7 +321,29 @@ def main():
 
         plot.animation_bi_astar(
             path, visited_fore, visited_back, "Bidirectional-A*")
-
+        
+        show_anim = st.checkbox('Run Animation')
+        if(show_anim): 
+            if(environments == 'Aircraft Stealth Mission Terrain'):
+                st.video('gif/bi_astar/aircraft.mp4', format="video/mp4", start_time=0)
+            elif environments == 'Agriculture Terrain':
+                st.video('gif/bi_astar/agriculture.mp4', format="video/mp4", start_time=0)
+            elif environments == 'Extra Terrestrial Terrain':
+                st.video('gif/bi_astar/extraTerres.mp4', format="video/mp4", start_time=0)
+            elif environments == 'Elevated rocky terrain':
+                st.video('gif/bi_astar/elevatedRocky.mkv', format="video/mkv", start_time=0)
+            elif environments == 'Seafloor Terrain':
+                st.video('gif/bi_astar/seafloor.mkv', format="video/mkv", start_time=0)
+            elif environments == 'Earthquake Disaster Terrain':
+                st.video('gif/bi_astar/earthquake.mkv', format="video/mkv", start_time=0)
+            elif environments == 'Industry Warehouse Terrain':
+                st.video('gif/bi_astar/industry.mkv', format="video/mkv", start_time=0)
+            elif environments == 'Forest Terrain':
+                st.video('gif/bi_astar/forest.mkv', format="video/mkv", start_time=0)
+            elif(environments == 'Pedestrain Terrain'):
+                st.video('gif/bi_astar/pedestrian.mp4', format="video/mp4", start_time=0)
+        
+    
     elif option == 'LPA* Algorithm':
         lpastar = LPAStar(s_start, s_goal, "Euclidean", currentEnv)
         lpastar.run()
