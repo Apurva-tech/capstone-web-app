@@ -210,7 +210,7 @@ def main():
             s_goal = (48, 2)
             currentEnv = agricultureenv
             html = '<html><body><img style="margin-bottom: 10px;" src="https://media.istockphoto.com/id/454184549/photo/soybean-field.jpg?s=612x612&w=0&k=20&c=pRJJFvHnsjnEfkQRW5s-hKS-PGtYfdcrh7mWzQWdvM0=" alt="Agriculture" width="300" height="150"></body></html>'
-            st.sidebar.metric(label="Best algorithm", value="LPA* Algorithm", delta="optimality, slowly changing environment")
+            st.sidebar.metric(label="Best algorithm", value="Bidirectional A* Algorithm", delta="optimality, slowly changing environment")
             st.sidebar.markdown(html, unsafe_allow_html=True)
 
         elif environments == 'Extra Terrestrial Terrain':
@@ -347,10 +347,52 @@ def main():
     elif option == 'LPA* Algorithm':
         lpastar = LPAStar(s_start, s_goal, "Euclidean", currentEnv)
         lpastar.run()
+        show_anim = st.checkbox('Run Animation')
+        if(show_anim): 
+            if(environments == 'Aircraft Stealth Mission Terrain'):
+                st.video('gif/lpa_star/aircraft.mkv', format="video/mkv", start_time=0)
+            elif environments == 'Agriculture Terrain':
+                st.video('gif/lpa_star/agriculture.mkv', format="video/mkv", start_time=0)
+            elif environments == 'Extra Terrestrial Terrain':
+                st.video('gif/lpa_star/extraTerres.mkv', format="video/mkv", start_time=0)
+            elif environments == 'Elevated rocky terrain':
+                st.video('gif/lpa_star/elevatedRocky.mkv', format="video/mkv", start_time=0)
+            elif environments == 'Seafloor Terrain':
+                st.video('gif/lpa_star/seafloor.mkv', format="video/mkv", start_time=0)
+            elif environments == 'Earthquake Disaster Terrain':
+                st.video('gif/lpa_star/earthquake.mkv', format="video/mkv", start_time=0)
+            elif environments == 'Industry Warehouse Terrain':
+                st.video('gif/lpa_star/industry.mkv', format="video/mkv", start_time=0)
+            elif environments == 'Forest Terrain':
+                st.video('gif/lpa_star/forest.mkv', format="video/mkv", start_time=0)
+            elif(environments == 'Pedestrain Terrain'):
+                st.video('gif/lpa_star/pedestrian.mkv', format="video/mkv", start_time=0)
+        
 
     elif option == 'Anytime D* Algorithm':
         dstar = ADStar(s_start, s_goal, 2.5, "euclidean", currentEnv)
         dstar.run()
+        show_anim = st.checkbox('Run Animation')
+        if(show_anim): 
+            if(environments == 'Aircraft Stealth Mission Terrain'):
+                st.video('gif/anytime_dstar/aircraft.mkv', format="video/mkv", start_time=0)
+            elif environments == 'Agriculture Terrain':
+                st.video('gif/anytime_dstar/agriculture.mkv', format="video/mkv", start_time=0)
+            elif environments == 'Extra Terrestrial Terrain':
+                st.video('gif/anytime_dstar/extraTerres.mkv', format="video/mkv", start_time=0)
+            elif environments == 'Elevated rocky terrain':
+                st.video('gif/anytime_dstar/elevatedRocky.mkv', format="video/mkv", start_time=0)
+            elif environments == 'Seafloor Terrain':
+                st.video('gif/anytime_dstar/seafloor.mkv', format="video/mkv", start_time=0)
+            elif environments == 'Earthquake Disaster Terrain':
+                st.video('gif/anytime_dstar/earthquake.mkv', format="video/mkv", start_time=0)
+            elif environments == 'Industry Warehouse Terrain':
+                st.video('gif/anytime_dstar/industry.mkv', format="video/mkv", start_time=0)
+            elif environments == 'Forest Terrain':
+                st.video('gif/anytime_dstar/forest.mkv', format="video/mkv", start_time=0)
+            elif(environments == 'Pedestrain Terrain'):
+                st.video('gif/anytime_dstar/pedestrian.mkv', format="video/mkv", start_time=0)
+        
 
     elif option == 'RTAA* Algorithm':
         start = time.time()
