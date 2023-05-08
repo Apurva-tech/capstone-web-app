@@ -187,10 +187,18 @@ def main():
             # Display the chart in Streamlit
             st.altair_chart(chart, use_container_width=True)
         return
+    geneticAlgorithmButton = st.sidebar.checkbox('Meta-heuristic Algorithm Demonstration');
+    
+    if( geneticAlgorithmButton):
+        geneticAlgorithm()
+        if(st.button('Run simulation')): 
+            components.html(html_string, height=800) 
+        return  
+
     option = st.sidebar.selectbox(
         'Choose 2D algorithm',
-        ('D* Algorithm', 'Bi-directional Algorithm',  'LPA* Algorithm', 'Anytime D* Algorithm', 'RTAA* Algorithm', 'Genetic Algorithm'))
-
+        ('D* Algorithm', 'Bi-directional Algorithm',  'LPA* Algorithm', 'Anytime D* Algorithm', 'RTAA* Algorithm'))
+    
     if option != 'Genetic Algorithm': 
         environments = st.sidebar.selectbox(
             'Choose environment',
@@ -264,8 +272,6 @@ def main():
             st.sidebar.metric(label="Best algorithm", value="Bidirectional A* Algorithm", delta="time, accurate")
             st.sidebar.markdown(html, unsafe_allow_html=True)
 
-    # if option == 'Genetic Algorithm':
-    #     geneticAlgorithm()
     elif( option == 'Genetic Algorithm'):
         geneticAlgorithm()
         if(st.button('Run simulation')): 
