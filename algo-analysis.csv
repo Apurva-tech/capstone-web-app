@@ -1,7 +1,7 @@
 ﻿Parameters,Bidirectional A* ,D*  ,Lifelong Planning A*,Anytime Repairing A*,Real-Time Adaptive A*
-Time of execution,20ms ,35ms,50ms,300ms,Highly dependant on terrain
-CPU Usage,5%,4.60%,6.10%,3.80%,5.70%
-RAM Usage,4.6 GB,4.5 GB,2.89GB,3.1GB,2.9GB
+Time of execution,6.5ms ,61ms,26ms,2813ms,Highly dependant on terrain
+CPU Usage,0%,0.01%,0.04%,2.06%,0.03%
+RAM Usage,150 MB,155 MB,153 MB,162 MB,171 MB
 Open List array length,587,408,467,427,487
 Closed List array length,3041,2406,2789,2549,2971
 Time Complexity,O(b^d),O(b^d),O(b^d),O(b^d),O(b^d)

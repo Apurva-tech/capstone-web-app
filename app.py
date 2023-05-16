@@ -36,7 +36,7 @@ def main():
 
         if (analysis == 'Time of execution'):
             x = ['D* Algorithm', 'Bi-directional Algorithm', 'LPA* Algorithm', 'Anytime D* Algorithm', 'RTAA* Algorithm']
-            y = [20, 35, 50, 300, 70]
+            y = [61, 6.5, 26, 300, 21]
 
             data = pd.DataFrame({'Algorithm': x, 'Time of execution': y})
 
@@ -71,17 +71,17 @@ def main():
 
         if (analysis == 'CPU Usage'): 
             x = ['D* Algorithm', 'Bi-directional Algorithm', 'LPA* Algorithm', 'Anytime D* Algorithm', 'RTAA* Algorithm']
-            y = [5.0, 4.6, 6.1, 3.8, 5.7]
+            y = [0.058, 0.01, 0.04, 2.06, 0.03]
 
             data = pd.DataFrame({'Algorithm': x, 'CPU Usage': y})
 
             color_scale = alt.Scale(domain=x, range=['#FCB711', '#F37021', '#CC004C', '#6460AA', '#008AB8'])
 
             chart = alt.Chart(data).mark_bar().encode(
-                x=alt.X('CPU Usage', axis=alt.Axis(format='%', title='CPU Usage')),
+                x=alt.X('CPU Usage', axis=alt.Axis(  title='CPU Usage')),
                 y=alt.Y('Algorithm', sort='-x'),
                 color=alt.Color('Algorithm', scale=color_scale),
-                tooltip=[alt.Tooltip('Algorithm'), alt.Tooltip('CPU Usage', format='.2%')]
+                tooltip=[alt.Tooltip('Algorithm'), alt.Tooltip('CPU Usage', format='%')]
             ).properties(
                 title={
                     "text": "CPU Usage v/s Algorithm",
@@ -106,17 +106,17 @@ def main():
 
         if(analysis == 'RAM Usage'): 
             x = ['D* Algorithm', 'Bi-directional Algorithm', 'LPA* Algorithm', 'Anytime D* Algorithm', 'RTAA* Algorithm']
-            y = [4.6, 4.5, 2.89, 3.1, 2.9]
+            y = [150, 155, 153, 162, 171]
 
             data = pd.DataFrame({'Algorithm': x, 'RAM Usage': y})
 
             color_scale = alt.Scale(domain=x, range=['#6b5b95', '#feb236', '#d64161', '#ff7b25', '#e5c5dd'])
 
             chart = alt.Chart(data).mark_bar().encode(
-                x=alt.X('RAM Usage', axis=alt.Axis(title='RAM Usage (GB)')),
+                x=alt.X('RAM Usage', axis=alt.Axis(title='RAM Usage (MB)')),
                 y=alt.Y('Algorithm', sort='-x'),
                 color=alt.Color('Algorithm', scale=color_scale),
-                tooltip=[alt.Tooltip('Algorithm'), alt.Tooltip('RAM Usage', format='.2f', title='RAM Usage (GB)')]
+                tooltip=[alt.Tooltip('Algorithm'), alt.Tooltip('RAM Usage', format='.1f', title='RAM Usage (MB)')]
             ).properties(
                 title={
                     "text": "RAM Usage by Algorithm",
@@ -316,13 +316,15 @@ def main():
         end = time.time()
 
         successMessage = ' ⌛ Time of execution of Bidirectional A* algorithm: ' + \
-            str((end-start) * 10**3) + ' ms'
+            str(round((end-start) * 10**3, 6)) + ' ms'
         st.sidebar.success(successMessage)
-
-        cpu = '💻 CPU usage: ' + str(psutil.cpu_percent(4)/1.5)
+        cpu_percent = psutil.cpu_percent(interval=1)
+        cpu_time = end - start
+        cpu = '💻 CPU usage: ' + str(round(cpu_time * cpu_percent / psutil.cpu_count(), 6)) + ' %'
         st.sidebar.success(cpu)
-        ram = '💽 RAM Used (GB): ' + \
-            str(psutil.virtual_memory()[3]/(1000000000*2))
+        process = psutil.Process()
+        ram_usage = round(process.memory_info().rss / 1024 / 1024, 6)
+        ram = '💽 RAM usage: ' + str(ram_usage) + ' MB'
         st.sidebar.success(ram)
 
         plot.animation_bi_astar(
@@ -409,15 +411,18 @@ def main():
         plot = Plotting(s_start, s_goal, currentEnv)
         rtaa.searching()
         end = time.time()
-        successMessage = ' ⌛ Time of execution of Real-time Adaptive A* (RTAA*) algorithm: ' + str(
-            (end-start) * 10**3) + ' ms'
+        successMessage = ' ⌛ Time of execution of Real-time Adaptive A* (RTAA*) algorithm: ' + \
+            str(round((end-start) * 10**3, 6)) + ' ms'
         st.sidebar.success(successMessage)
-
-        cpu = '💻 CPU usage: ' + str(psutil.cpu_percent(4)/1.5)
+        cpu_percent = psutil.cpu_percent(interval=1)
+        cpu_time = end - start
+        cpu = '💻 CPU usage: ' + str(round(cpu_time * cpu_percent / psutil.cpu_count(), 6)) + ' %'
         st.sidebar.success(cpu)
-        ram = '💽 RAM Used (GB): ' + \
-            str(psutil.virtual_memory()[3]/(1000000000*2))
+        process = psutil.Process()
+        ram_usage = round(process.memory_info().rss / 1024 / 1024, 6)
+        ram = '💽 RAM usage: ' + str(ram_usage) + ' MB'
         st.sidebar.success(ram)
+
         plot.animation_lrta(rtaa.path, rtaa.visited,
                             "Real-time Adaptive A* (RTAA*)")
          

@@ -45,12 +45,16 @@ class LPAStar:
         self.plot_path(self.extract_path())
         self.fig.canvas.mpl_connect('button_press_event', self.on_press)
         end = time.time()
-        successMessage = ' ⌛ Time of execution of LPA* algorithm: ' + str((end-start) * 10**3) + ' ms'
-        st.sidebar.success(successMessage  )
-
-        cpu = '💻 CPU usage: ' + str(psutil.cpu_percent(4)/1.5)
+        successMessage = ' ⌛ Time of execution of LPA* algorithm: ' + \
+            str(round((end-start) * 10**3, 6)) + ' ms'
+        st.sidebar.success(successMessage)
+        cpu_percent = psutil.cpu_percent(interval=1)
+        cpu_time = end - start
+        cpu = '💻 CPU usage: ' + str(round(cpu_time * cpu_percent / psutil.cpu_count(), 6)) + ' %'
         st.sidebar.success(cpu)
-        ram = '💽 RAM Used (GB): ' + str(psutil.virtual_memory()[3]/(1000000000*2))
+        process = psutil.Process()
+        ram_usage = round(process.memory_info().rss / 1024 / 1024, 6)
+        ram = '💽 RAM usage: ' + str(ram_usage) + ' MB'
         st.sidebar.success(ram)
  
         fig_html = mpld3.fig_to_html(self.fig)
