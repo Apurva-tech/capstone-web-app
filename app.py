@@ -211,6 +211,8 @@ def main():
             html = '<html><body><img style="margin-bottom: 10px;" src="https://raw.githubusercontent.com/Apurva-tech/files/master/aircraftTerrain.jpeg" alt="Aircraft" width="300" height="150"></body></html>'
             st.sidebar.metric(label="Best algorithm", value="RTAA* Algorithm", delta="optimal, time efficient")
             st.sidebar.markdown(html, unsafe_allow_html=True)
+            if(st.sidebar.button('Show RTAA*')): 
+                option = 'RTAA* Algorithm'
 
 
         elif environments == 'Agriculture Terrain':
@@ -220,6 +222,8 @@ def main():
             html = '<html><body><img style="margin-bottom: 10px;" src="https://media.istockphoto.com/id/454184549/photo/soybean-field.jpg?s=612x612&w=0&k=20&c=pRJJFvHnsjnEfkQRW5s-hKS-PGtYfdcrh7mWzQWdvM0=" alt="Agriculture" width="300" height="150"></body></html>'
             st.sidebar.metric(label="Best algorithm", value="Bidirectional A* Algorithm", delta="optimality, slowly changing environment")
             st.sidebar.markdown(html, unsafe_allow_html=True)
+            if(st.sidebar.button('Show Bidirectional')): 
+                option = 'Bi-directional Algorithm'
 
         elif environments == 'Extra Terrestrial Terrain':
             s_start = (1, 1)
@@ -228,26 +232,34 @@ def main():
             html = '<html><body><img style="margin-bottom: 10px;" src="https://www.vaisala.com/sites/default/files/styles/16_9_liftup_extra_large/public/images/LIFT-Mars_3D-illustration_1600x900.jpg" alt="Extra Terrestrial Terrain" width="300" height="150"></body></html>'
             st.sidebar.metric(label="Best algorithm", value="D* or RTAA* Algorithm", delta="fuel efficient: optimum time and space complexity")
             st.sidebar.markdown(html, unsafe_allow_html=True)
+            if(st.sidebar.button('Show RTAA*')): 
+                option = 'RTAA* Algorithm'
 
         elif environments == 'Elevated rocky terrain':
             currentEnv = env1
             html = '<html><body><img style="margin-bottom: 10px;" src="https://developers.google.com/static/maps/documentation/gaming/images/elevation2.png" alt="Elevated rocky terrain" width="300" height="150"></body></html>'
             st.sidebar.metric(label="Best algorithm", value="ARA* Algorithm", delta="dynamic env")
             st.sidebar.markdown(html, unsafe_allow_html=True)
+            if(st.sidebar.button('Show ARA*')): 
+                option = 'Anytime D* Algorithm'
 
         elif environments == 'Seafloor Terrain':
             currentEnv = seafloorenv
             html = '<html><body><img style="margin-bottom: 10px;" src="https://cdna.artstation.com/p/assets/images/images/003/214/442/large/anil-isbilir-highresscreenshot00002-copy.jpg" alt="Seafloor Terrain" width="300" height="150"></body></html>'
             st.sidebar.metric(label="Best algorithm", value="D* Algorithm", delta="optimal, complex environments")
             st.sidebar.markdown(html, unsafe_allow_html=True)
+            if(st.sidebar.button('Show D*')): 
+                option = 'D* Algorithm'
 
         elif environments == 'Earthquake Disaster Terrain':
             s_start = (2, 2)
             s_goal = (48, 2)
             currentEnv = disasterenv
             html = '<html><body><img style="margin-bottom: 10px;" src="https://1.bp.blogspot.com/-977hjZn3njU/WRBW1DBF_LI/AAAAAAAAMRM/EYnfV9xuT4knm2REBExZeANvu67cooB6wCLcB/s1600/The%2Bdramatic%2Bterrain%2B-%2Bthe%2Bjoin%2Bbetween%2Btwo%2Btectonic%2Bplates.jpg" alt="Earthquake Disaster Terrain" width="300" height="150"></body></html>'
-            st.sidebar.metric(label="Best algorithm", value="ARA* Algorithm", delta="time, memory efficient")
+            st.sidebar.metric(label="Best algorithm", value="D* Algorithm", delta="time, memory efficient")
             st.sidebar.markdown(html, unsafe_allow_html=True)
+            if(st.sidebar.button('Show D*')): 
+                option = 'D* Algorithm'
 
         elif environments == 'Industry Warehouse Terrain':
             s_start = (5, 5)
@@ -256,6 +268,8 @@ def main():
             html = '<html><body><img style="margin-bottom: 10px;" src="https://www.360connect.com/wp-content/uploads/2020/12/forklift-835340_1920.jpg" alt="Industry Warehouse Terrain" width="300" height="150"></body></html>'
             st.sidebar.metric(label="Best algorithm", value="LPA* Algorithm", delta="slow changing env, optimal")
             st.sidebar.markdown(html, unsafe_allow_html=True)
+            if(st.sidebar.button('Show LPA*')): 
+                option = 'LPA* Algorithm'
 
         elif environments == 'Forest Terrain':
             s_start = (5, 25)
@@ -263,6 +277,8 @@ def main():
             html = '<html><body><img style="margin-bottom: 10px;" src="https://img5.goodfon.com/wallpaper/nbig/0/cb/priroda-leto-vid-sverkhu-les-derevia-doroga.jpg" alt="Forest Terrain" width="300" height="150"></body></html>'
             st.sidebar.metric(label="Best algorithm", value="LPA* Algorithm", delta="optimal, less time complexity")
             st.sidebar.markdown(html, unsafe_allow_html=True)
+            if(st.sidebar.button('Show LPA*')): 
+                option = 'LPA* Algorithm'
 
         elif environments == 'City street Terrain':
             s_start = (2, 2)
@@ -271,6 +287,8 @@ def main():
             html = '<html><body><img style="margin-bottom: 10px;" src="https://community.esri.com/legacyfs/online/121677_3.jpg" alt="City street Terrain" width="300" height="150"></body></html>'
             st.sidebar.metric(label="Best algorithm", value="Bidirectional A* Algorithm", delta="time, accurate")
             st.sidebar.markdown(html, unsafe_allow_html=True)
+            if(st.sidebar.button('Show Bidirectional')): 
+                option = 'Bi-directional Algorithm'
 
     elif( option == 'Genetic Algorithm'):
         geneticAlgorithm()

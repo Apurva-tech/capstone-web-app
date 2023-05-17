@@ -55,7 +55,7 @@ def geneticAlgorithm():
 
         show_plot(best_chromosome=chr_crossover_mutated_population[0])
         Config.generations += 1
-        st.write(geneticAlgoLogs)
+        print(geneticAlgoLogs)
 
     show_plot(best_chromosome=chr_crossover_mutated_population[0], inf_time=True)
 
