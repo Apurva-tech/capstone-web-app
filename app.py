@@ -307,23 +307,23 @@ def main():
         show_anim = st.checkbox('Run Animation')
         if(show_anim): 
             if(environments == 'Aircraft Stealth Mission Terrain'):
-                st.image('gif/d_star/aircraft.gif')
+                st.video('gif/d_star/aircraft.mp4', format="video/mp4", start_time=0)
             elif environments == 'Agriculture Terrain':
-                st.image('gif/d_star/agriculture.gif')
+                st.video('gif/d_star/agriculture.mp4', format="video/mp4", start_time=0)
             elif environments == 'Extra Terrestrial Terrain':
-                st.image('gif/d_star/extraTerres.gif')
+                st.video('gif/d_star/extraTerres.mp4', format="video/mp4", start_time=0)
             elif environments == 'Elevated rocky terrain':
-                st.image('gif/d_star/elevatedRocky.gif')
+                st.video('gif/d_star/elevatedRocky.mp4', format="video/mp4", start_time=0)
             elif environments == 'Seafloor Terrain':
-                st.image('gif/d_star/seafloor.gif')
+                st.video('gif/d_star/seafloor.mp4', format="video/mp4", start_time=0)
             elif environments == 'Earthquake Disaster Terrain':
-                st.image('gif/d_star/earthquake.gif')
+                st.video('gif/d_star/earthquake.mp4', format="video/mp4", start_time=0)
             elif environments == 'Industry Warehouse Terrain':
-                st.image('gif/d_star/industry.gif')
+                st.video('gif/d_star/industry.mp4', format="video/mp4", start_time=0)
             elif environments == 'Forest Terrain':
-                st.image('gif/d_star/forest.gif')
+                st.video('gif/d_star/forest.mp4', format="video/mp4", start_time=0)
             elif(environments == 'City street Terrain'):
-                st.image('gif/d_star/pedestrian.gif')
+                st.video('gif/d_star/pedestrian.mp4', format="video/mp4", start_time=0)
         
 
     elif option == 'Bi-directional Algorithm':
