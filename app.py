@@ -35,7 +35,7 @@ def main():
         ('Time of execution', 'CPU Usage', 'RAM Usage', 'Open and Closed list', 'Optimality'))
 
         if (analysis == 'Time of execution'):
-            x = ['D* Algorithm', 'Bi-directional Algorithm', 'LPA* Algorithm', 'Anytime D* Algorithm', 'RTAA* Algorithm']
+            x = ['D* Algorithm', 'Bi-directional Algorithm', 'LPA* Algorithm', 'Anytime Repairing A* Algorithm', 'RTAA* Algorithm']
             y = [61, 6.5, 26, 300, 21]
 
             data = pd.DataFrame({'Algorithm': x, 'Time of execution': y})
@@ -70,7 +70,7 @@ def main():
             st.altair_chart(chart, use_container_width=True)
 
         if (analysis == 'CPU Usage'): 
-            x = ['D* Algorithm', 'Bi-directional Algorithm', 'LPA* Algorithm', 'Anytime D* Algorithm', 'RTAA* Algorithm']
+            x = ['D* Algorithm', 'Bi-directional Algorithm', 'LPA* Algorithm', 'Anytime Repairing A* Algorithm', 'RTAA* Algorithm']
             y = [0.058, 0.01, 0.04, 2.06, 0.03]
 
             data = pd.DataFrame({'Algorithm': x, 'CPU Usage': y})
@@ -105,7 +105,7 @@ def main():
             st.altair_chart(chart, use_container_width=True)
 
         if(analysis == 'RAM Usage'): 
-            x = ['D* Algorithm', 'Bi-directional Algorithm', 'LPA* Algorithm', 'Anytime D* Algorithm', 'RTAA* Algorithm']
+            x = ['D* Algorithm', 'Bi-directional Algorithm', 'LPA* Algorithm', 'Anytime Repairing A* Algorithm', 'RTAA* Algorithm']
             y = [150, 155, 153, 162, 171]
 
             data = pd.DataFrame({'Algorithm': x, 'RAM Usage': y})
@@ -141,7 +141,7 @@ def main():
 
         if(analysis == 'Open and Closed list'): 
             # Data
-            x = ['D* Algorithm', 'Bi-directional Algorithm', 'LPA* Algorithm', 'Anytime D* Algorithm', 'RTAA* Algorithm']
+            x = ['D* Algorithm', 'Bi-directional Algorithm', 'LPA* Algorithm', 'Anytime Repairing A* Algorithm', 'RTAA* Algorithm']
             open_list_length = [587, 408, 467, 427, 487]
             closed_list_length = [3041, 2406, 2789, 2549, 2971]
 
@@ -169,7 +169,7 @@ def main():
         if(analysis == 'Optimality'):
             # Define the data
             data = pd.DataFrame({
-                'Algorithm': ['D* Algorithm', 'Bi-directional Algorithm', 'LPA* Algorithm', 'Anytime D* Algorithm', 'RTAA* Algorithm'],
+                'Algorithm': ['D* Algorithm', 'Bi-directional Algorithm', 'LPA* Algorithm', 'Anytime Repairing A* Algorithm', 'RTAA* Algorithm'],
                 'Path Length': [100, 95, 90, 95, 92]
             })
 
@@ -191,13 +191,13 @@ def main():
     
     if( geneticAlgorithmButton):
         geneticAlgorithm()
-        if(st.button('Run simulation')): 
+        if(st.button('Run simulation')):  
             components.html(html_string, height=800) 
         return  
 
     option = st.sidebar.selectbox(
-        'Choose 2D algorithm',
-        ('D* Algorithm', 'Bi-directional Algorithm',  'LPA* Algorithm', 'Anytime D* Algorithm', 'RTAA* Algorithm'))
+        'Choose heuristic algorithm',
+        ('D* Algorithm', 'Bi-directional Algorithm',  'LPA* Algorithm', 'Anytime Repairing A* Algorithm', 'RTAA* Algorithm'))
     
     if option != 'Genetic Algorithm': 
         environments = st.sidebar.selectbox(
@@ -241,7 +241,7 @@ def main():
             st.sidebar.metric(label="Best algorithm", value="ARA* Algorithm", delta="dynamic env")
             st.sidebar.markdown(html, unsafe_allow_html=True)
             if(st.sidebar.button('Show ARA*')): 
-                option = 'Anytime D* Algorithm'
+                option = 'Anytime Repairing A* Algorithm'
 
         elif environments == 'Seafloor Terrain':
             currentEnv = seafloorenv
@@ -290,11 +290,7 @@ def main():
             if(st.sidebar.button('Show Bidirectional')): 
                 option = 'Bi-directional Algorithm'
 
-    elif( option == 'Genetic Algorithm'):
-        geneticAlgorithm()
-        if(st.button('Run simulation')): 
-            components.html(html_string, height=800) 
-
+  
     obs = []
     if (option == 'D* Algorithm'):
         obs_x = st.sidebar.slider('Choose an obstacle (X)', 0, 51, 0)
@@ -395,7 +391,7 @@ def main():
                 st.video('gif/lpa_star/pedestrian.mkv', format="video/mkv", start_time=0)
         
 
-    elif option == 'Anytime D* Algorithm':
+    elif option == 'Anytime Repairing A* Algorithm':
         dstar = ADStar(s_start, s_goal, 2.5, "euclidean", currentEnv)
         dstar.run()
         show_anim = st.checkbox('Run Animation')

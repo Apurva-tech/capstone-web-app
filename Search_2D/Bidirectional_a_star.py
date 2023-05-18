@@ -205,23 +205,3 @@ class BidirectionalAStar:
 
         return False
 
-
-# def main():
- 
-#     x_start = (5, 5)
-#     x_goal = (45, 5)
-
-#     bastar = BidirectionalAStar(x_start, x_goal, "euclidean")
-#     plot = plotting.Plotting(x_start, x_goal)
-
-#     start = time.time()
-#     path, visited_fore, visited_back = bastar.searching()
-#     end = time.time()
-#     plot.animation_bi_astar(path, visited_fore, visited_back, "Bidirectional-A*")  # animation
-    
-#     print("The path length for Bidirectional A* algorithm is: ", len(path))
-#     print("The ⌛ Time of execution of Bidirectional A star algorithm is :", (end-start)* 1000, "milliseconds")
-
-
-# if __name__ == '__main__':
-#     main()
